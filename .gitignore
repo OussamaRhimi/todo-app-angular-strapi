@@ -1,0 +1,41 @@
+# Node / npm
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Angular
+dist/
+tmp/
+.angular/
+*.log
+*.map
+
+# Strapi
+backend/.cache/
+backend/build/
+backend/public/uploads/*
+backend/.tmp/
+
+# Environment / secrets
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Docker
+Dockerfile*
+docker-compose.override.yml
+*.dockerignore
+
+# Editor / OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
