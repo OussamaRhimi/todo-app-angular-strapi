@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="add-card">
+    <h2 style="margin-top: 0; color: #1e293b; font-weight: 700;">My Tasks</h2>
+    <form (ngSubmit)="addTask()" class="add-form">
+      <div class="input-group">
+        <mat-form-field appearance="outline" style="flex: 2;">
+          <mat-label>Task Title</mat-label>
+          <input matInput [(ngModel)]="newTitle" name="newTitle" required placeholder="What needs doing?">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="flex: 1;">
+          <mat-label>Notes</mat-label>
+          <input matInput [(ngModel)]="newDescription" name="newDescription" placeholder="Details...">
+        </mat-form-field>
+      </div>
+      <button mat-flat-button color="primary" type="submit" [disabled]="loading || !newTitle.trim()" style="padding: 24px; border-radius: 12px;">
+        <mat-icon>add</mat-icon> Add New Task
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="loading" class="loading-box">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading">
+    <div *ngFor="let task of tasks; trackBy: trackById" class="task-item" [class.completed]="task.completed">
+      
+      <ng-container *ngIf="!editMode[task.id]">
+        <mat-checkbox [checked]="task.completed" (change)="toggleComplete(task)" color="primary"></mat-checkbox>
+        
+        <div class="content-area">
+          <span class="title-text">{{ task.title }}</span>
+          <span class="desc-text" *ngIf="getDescriptionText(task.description)">
+            {{ getDescriptionText(task.description) }}
+          </span>
+        </div>
+
+        <div class="actions">
+          <button mat-icon-button (click)="startEdit(task)" color="primary" title="Edit Task">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteTask(task)" color="warn" title="Delete Task">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="edit-mode-container" *ngIf="editMode[task.id]">
+        <input class="modern-input" [(ngModel)]="editTitle[task.id]" placeholder="Title">
+        <textarea class="modern-input" [(ngModel)]="editDescription[task.id]" placeholder="Description" rows="2"></textarea>
+        <div class="edit-actions">
+          <button mat-button (click)="cancelEdit(task.id)">Cancel</button>
+          <button mat-raised-button color="primary" (click)="saveEdit(task)">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="tasks.length === 0" class="empty-state">
+      <mat-icon style="font-size: 48px; width: 48px; height: 48px;">task_alt</mat-icon>
+      <p>All clear! You don't have any tasks right now.</p>
+    </div>
+  </div>
+</div>

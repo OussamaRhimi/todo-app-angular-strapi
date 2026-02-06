@@ -1,0 +1,113 @@
+.container {
+  max-width: 700px;
+  margin: 50px auto;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 0 20px;
+}
+
+/* Glassmorphism Add Card */
+.add-card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+  border: 1px solid #f0f0f0;
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-group {
+  display: flex;
+  gap: 12px;
+}
+
+/* Modern Task Items */
+.task-item {
+  background: white;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.06);
+  border-color: #e2e8f0;
+}
+
+.task-item.completed {
+  background: #f8fafc;
+  opacity: 0.7;
+}
+
+/* Text Content Area */
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.task-item.completed .title-text {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.desc-text {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Edit Mode Layout */
+.edit-mode-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.modern-input {
+  border: 1px solid #e2e8f0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.modern-input:focus {
+  border-color: #3b82f6;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Spinner & Empty State */
+.loading-box { text-align: center; margin: 40px; }
+.empty-state { text-align: center; color: #94a3b8; margin-top: 60px; }
