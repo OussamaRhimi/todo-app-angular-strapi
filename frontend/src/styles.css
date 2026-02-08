@@ -1,2 +1,55 @@
-/* Add any global styles here if needed */
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Global app polish + layout helpers */
+
+:root {
+  --app-max-width: 920px;
+  --app-radius-xl: 24px;
+  --app-radius-lg: 20px;
+  --app-radius-md: 14px;
+  --app-radius-sm: 10px;
+  --app-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.08);
+  --app-shadow-2: 0 20px 60px rgba(0, 0, 0, 0.14);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Subtle background that adapts to Material 3 light/dark tokens */
+  background:
+    radial-gradient(1200px 600px at 10% -10%, var(--mat-sys-primary-container) 0%, transparent 60%),
+    radial-gradient(900px 450px at 110% 0%, var(--mat-sys-tertiary-container) 0%, transparent 55%),
+    radial-gradient(
+      800px 500px at 50% 120%,
+      var(--mat-sys-surface-container-lowest, var(--mat-sys-surface)) 0%,
+      transparent 65%
+    ),
+    var(--mat-sys-surface);
+}
+
+a {
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+::selection {
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}

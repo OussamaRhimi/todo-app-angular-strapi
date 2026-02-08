@@ -1,7 +1,4 @@
-/**
- * task router
- */
-
+// backend/src/api/task/routes/task.ts
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreRouter('api::task.task');

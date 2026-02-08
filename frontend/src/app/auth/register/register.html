@@ -1,0 +1,47 @@
+<div class="auth-shell">
+  <mat-card class="auth-card">
+    <mat-card-title>Register</mat-card-title>
+    <mat-card-subtitle>Create your account to start managing your tasks</mat-card-subtitle>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="username?.hasError('required')">Username is required</mat-error>
+        <mat-error *ngIf="username?.hasError('minlength')">Username must be at least 3 characters</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        <mat-error *ngIf="email?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="email?.hasError('email')">Invalid email format</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" required>
+        <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="password?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput formControlName="confirmPassword" type="password" required>
+        <mat-error *ngIf="confirmPassword?.hasError('required')">Confirmation is required</mat-error>
+        <mat-error *ngIf="registerForm.hasError('mismatch')">Passwords do not match</mat-error>
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="loading || registerForm.invalid">
+          <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+          <span *ngIf="!loading">Register</span>
+        </button>
+      </div>
+
+      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    </form>
+
+    <p class="switch-link">Already have an account? <a routerLink="/login">Login</a></p>
+  </mat-card>
+</div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface StrapiListResponse<T> {
   data: T[];
@@ -17,30 +18,46 @@ export interface Task {
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private apiUrl = '/api/tasks';
+  private apiUrl = '/api/tasks'; // relative path → goes through proxy
+
   constructor(private http: HttpClient) {}
 
   getTasks(): Observable<StrapiListResponse<Task>> {
-    return this.http.get<StrapiListResponse<Task>>(this.apiUrl);
+    return this.http.get<StrapiListResponse<Task>>(this.apiUrl).pipe(
+      catchError(err => {
+        if (err.status === 401 || err.status === 403) {
+          // Optionally trigger logout or redirect in auth guard
+          console.warn('Auth error in getTasks – user may be logged out');
+        }
+        return throwError(() => err);
+      })
+    );
   }
 
   private toRichText(text: string): any[] {
-    if (!text.trim()) return [];
+    if (!text?.trim()) return [];
     return [{ type: 'paragraph', children: [{ type: 'text', text }] }];
   }
 
   addTask(title: string, description: string = ''): Observable<any> {
     const payload = {
-      data: { title, description: this.toRichText(description), completed: false }
+      data: {
+        title,
+        description: this.toRichText(description),
+        completed: false
+      }
     };
     return this.http.post(this.apiUrl, payload);
   }
 
-  updateTask(documentId: string, updates: any): Observable<any> {
+  updateTask(documentId: string, updates: Partial<Task>): Observable<any> {
+    const payload = { data: { ...updates } };
+
     if (updates.description !== undefined) {
-      updates = { ...updates, description: this.toRichText(updates.description) };
+      payload.data.description = this.toRichText(updates.description as string);
     }
-    return this.http.put(`${this.apiUrl}/${documentId}`, { data: updates });
+
+    return this.http.put(`${this.apiUrl}/${documentId}`, payload);
   }
 
   deleteTask(documentId: string): Observable<any> {

@@ -1,14 +1,13 @@
-// src/app/app.config.ts  (create this file if not present)
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';  // ← add this
-import { provideAnimations } from '@angular/platform-browser/animations';  // ← add this for animations
+import { provideHttpClient, withInterceptors } from '@angular/common/http'; // ← Add withInterceptors
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { authInterceptor } from './interceptors/auth-interceptor'; // ← Import your interceptor file
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),   // ← enables HttpClient everywhere
-    provideAnimations(),   // ← enables animations
-    // provideRouter(routes),  // if you add routing later
-    // other providers...
+    provideHttpClient(
+      withInterceptors([authInterceptor]) // ← THIS IS CRITICAL
+    ),
+    provideAnimations(),
   ]
 };
