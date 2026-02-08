@@ -35,6 +35,7 @@ import { AuthService } from '../../services/auth';
 export class TaskList implements OnInit {
   tasks: Task[] = [];
   loading = false;
+  aiGenerating = false;
   error = '';
   newTitle = '';
   newDescription = '';
@@ -114,6 +115,38 @@ export class TaskList implements OnInit {
       error: () => {
         this.error = 'Failed to add task';
         this.loading = false;
+        this.detectChangesSafely();
+      },
+    });
+  }
+
+  generateTodayTasks(): void {
+    const context = window.prompt(
+      'Tell the AI what your day looks like (optional). مثال: gym, study, groceries',
+      ''
+    );
+    if (context === null) return;
+
+    this.aiGenerating = true;
+    this.error = '';
+
+    this.taskService.generateTodayTasks({ context, maxTasks: 6 }).subscribe({
+      next: () => {
+        this.aiGenerating = false;
+        this.loadTasks();
+      },
+      error: (err) => {
+        this.aiGenerating = false;
+
+        if (err?.status === 401 || err?.status === 403) {
+          this.authService.logout();
+          return;
+        }
+
+        this.error =
+          err?.error?.error?.message ||
+          err?.error?.message ||
+          'Failed to generate tasks. Make sure the AI backend is configured.';
         this.detectChangesSafely();
       },
     });

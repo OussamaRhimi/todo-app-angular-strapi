@@ -50,6 +50,25 @@
   flex: none;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ai-button {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-button mat-spinner {
+  display: inline-block;
+}
+
 .progress {
   margin: 14px 0 6px;
   height: 6px;

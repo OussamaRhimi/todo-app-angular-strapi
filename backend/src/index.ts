@@ -31,6 +31,7 @@ export default {
       'api::task.task.create',
       'api::task.task.update',
       'api::task.task.delete',
+      'api::task.task.generateToday',
     ];
 
     const existing = await strapi.db.query('plugin::users-permissions.permission').findMany({

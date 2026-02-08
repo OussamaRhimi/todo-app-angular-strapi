@@ -8,10 +8,25 @@
         </p>
       </div>
 
-      <button mat-stroked-button color="warn" type="button" class="logout-button" (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        Logout
-      </button>
+      <div class="header-actions">
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          class="ai-button"
+          (click)="generateTodayTasks()"
+          [disabled]="loading || aiGenerating"
+        >
+          <mat-icon *ngIf="!aiGenerating">auto_awesome</mat-icon>
+          <mat-spinner *ngIf="aiGenerating" diameter="18"></mat-spinner>
+          AI Plan Today
+        </button>
+
+        <button mat-stroked-button color="warn" type="button" class="logout-button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      </div>
     </div>
 
     <mat-progress-bar

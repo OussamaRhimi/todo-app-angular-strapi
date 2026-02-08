@@ -16,6 +16,11 @@ export interface Task {
   completed: boolean;
 }
 
+export interface GenerateTasksRequest {
+  context?: string;
+  maxTasks?: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   private apiUrl = '/api/tasks'; // relative path → goes through proxy
@@ -62,5 +67,9 @@ export class TaskService {
 
   deleteTask(documentId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${documentId}`);
+  }
+
+  generateTodayTasks(payload: GenerateTasksRequest = {}): Observable<any> {
+    return this.http.post(`${this.apiUrl}/generate-today`, payload);
   }
 }
